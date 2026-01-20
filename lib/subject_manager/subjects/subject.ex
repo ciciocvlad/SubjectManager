@@ -1,5 +1,6 @@
 defmodule SubjectManager.Subjects.Subject do
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "subjects" do
@@ -12,12 +13,14 @@ defmodule SubjectManager.Subjects.Subject do
     timestamps(type: :utc_datetime)
   end
 
+  @castable ~w(name team position bio image_path)a
+
   @doc false
-  def changeset(incident, attrs) do
+  def changeset(incident \\ %__MODULE__{}, attrs \\ %{}) do
     incident
-    |> cast(attrs, [:name, :team, :position, :bio, :image_path])
-    |> validate_required([:name, :team, :position, :bio, :image_path])
+    |> cast(attrs, @castable)
+    |> validate_required(@castable)
     |> validate_length(:name, min: 3)
-    |> validate_length(:description, min: 10)
+    |> validate_length(:bio, min: 10)
   end
 end

@@ -66,6 +66,16 @@ defmodule SubjectManagerWeb do
     end
   end
 
+  def core_component do
+    quote do
+      use Phoenix.Component
+
+      alias Phoenix.HTML.Form
+
+      unquote(html_helpers())
+    end
+  end
+
   def html do
     quote do
       use Phoenix.Component
@@ -85,7 +95,6 @@ defmodule SubjectManagerWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import SubjectManagerWeb.CoreComponents
-      import SubjectManagerWeb.CustomComponents
       import SubjectManagerWeb.Gettext
 
       # Shortcut for generating JS commands
