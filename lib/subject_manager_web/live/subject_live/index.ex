@@ -34,7 +34,7 @@ defmodule SubjectManagerWeb.SubjectLive.Index do
   def render(assigns) do
     ~H"""
     <div class="subject-index">
-      <.filter_form form={@form} />
+      <.filter_form form={@form} page={~p"/subjects"} />
 
       <div class="subjects" id="subjects">
         <div id="empty" class="no-results only:block hidden">

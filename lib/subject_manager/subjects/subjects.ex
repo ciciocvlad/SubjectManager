@@ -13,4 +13,20 @@ defmodule SubjectManager.Subjects do
     |> where([subject: subject], subject.id == ^id)
     |> Repo.one()
   end
+
+  def create_subject(subject) do
+    %Subject{}
+    |> Subject.changeset(subject)
+    |> Repo.insert()
+  end
+
+  def update_subject(subject, attrs) do
+    subject
+    |> Subject.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_subject(%Subject{} = subject) do
+    Repo.delete(subject)
+  end
 end

@@ -8,7 +8,8 @@ defmodule SubjectManagerWeb.SubjectLive.Subject do
   @impl true
   def mount(%{"id" => id}, _session, socket) do
     case Subjects.get_by_id(id) do
-      nil -> {:ok, push_navigate(socket, to: ~p"/subjects")}
+      nil ->
+        {:ok, push_navigate(socket, to: ~p"/subjects")}
 
       subject ->
         {:ok, assign(socket, subject: subject)}
@@ -19,6 +20,9 @@ defmodule SubjectManagerWeb.SubjectLive.Subject do
   def render(assigns) do
     ~H"""
     <div class="flex gap-10">
+      <.link navigate={~p"/subjects"} class="h-10">
+        <img src="/icons/back.svg" class="w-20" />
+      </.link>
       <img src={@subject.image_path} width={400} />
       <div>
         <div class="flex items-center gap-2">

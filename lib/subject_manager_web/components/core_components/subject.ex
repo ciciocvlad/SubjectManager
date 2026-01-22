@@ -26,8 +26,20 @@ defmodule SubjectManagerWeb.Components.CoreComponents.Subject do
         </div>
       </.link>
       <div :if={@can_change?} class="flex gap-5 mx-10 mt-2">
-        <button class="flex-1 text-zinc-600 rounded border border-zinc-600 hover:bg-zinc-600 hover:text-white" phx-click="edit" phx-value-id={@subject.id}>Edit</button>
-        <button class="flex-1 text-red-600 rounded border border-red-600 hover:bg-red-600 hover:text-white" phx-click="delete" phx-value-id={@subject.id}>Delete</button>
+        <button
+          class="flex-1 text-zinc-600 rounded border border-zinc-600 hover:bg-zinc-600 hover:text-white"
+          phx-click="edit"
+          phx-value-id={@subject.id}
+        >
+          Edit
+        </button>
+        <button
+          class="flex-1 text-red-600 rounded border border-red-600 hover:bg-red-600 hover:text-white"
+          phx-click="delete"
+          phx-value-id={@subject.id}
+        >
+          Delete
+        </button>
       </div>
     </div>
     """

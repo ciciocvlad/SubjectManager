@@ -3,6 +3,7 @@ defmodule SubjectManagerWeb.Components.CoreComponents.FilterForm do
   use SubjectManagerWeb, :core_component
 
   attr :form, Form, required: true
+  attr :page, :string, required: true
 
   def filter_form(assigns) do
     ~H"""
@@ -31,9 +32,7 @@ defmodule SubjectManagerWeb.Components.CoreComponents.FilterForm do
         ]}
       />
 
-      <.link patch={~p"/subjects"}>
-        Reset
-      </.link>
+      <.link patch={@page}>Reset</.link>
     </.form>
     """
   end
