@@ -19,12 +19,15 @@ defmodule SubjectManagerWeb.Router do
 
     live("/", SubjectLive.Index)
     live("/subjects", SubjectLive.Index)
-  end
+    live("/subjects/:id", SubjectLive.Subject)
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SubjectManagerWeb do
-  #   pipe_through :api
-  # end
+    scope "/admin/subjects" do
+      live("/", Admin.Subjects)
+      live("/new", Admin.Subject, :edit)
+      live("/:id", Admin.Subject, :index)
+      live("/:id/edit", Admin.Subject, :edit)
+    end
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:subject_manager, :dev_routes) do
