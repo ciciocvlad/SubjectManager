@@ -3,6 +3,8 @@ defmodule SubjectManagerWeb.SubjectLive.Index do
 
   import SubjectManagerWeb.Components.CoreComponents.FilterForm
   import SubjectManagerWeb.Components.CoreComponents.Subject
+  import SubjectManager.Utils.FilterSubjects, only: [filter: 3]
+  import SubjectManager.Utils.SortSubjects, only: [sort: 2]
 
   alias SubjectManager.Subjects
 
@@ -41,7 +43,7 @@ defmodule SubjectManagerWeb.SubjectLive.Index do
           No subjects found. Try changing your filters.
         </div>
         <.subject
-          :for={subject <- filter_subjects(@subjects, @q, @position, @sort_by)}
+          :for={subject <- @subjects |> filter(@q, @position) |> sort(@sort_by)}
           subject={subject}
           dom_id={"subject-#{subject.id}"}
         />
@@ -49,37 +51,4 @@ defmodule SubjectManagerWeb.SubjectLive.Index do
     </div>
     """
   end
-
-  defp filter_subjects(subjects, name, position, sort_by) do
-    subjects
-    |> filter_name(name)
-    |> filter_position(position)
-    |> sort(sort_by)
-  end
-
-  defp filter_name(subjects, ""), do: subjects
-  defp filter_name(subjects, name), do: Enum.filter(subjects, fn s -> s.name =~ name end)
-
-  defp filter_position(subjects, ""), do: subjects
-
-  defp filter_position(subjects, position),
-    do: Enum.filter(subjects, &(get_position(position) == &1.position))
-
-  defp get_position("forward"), do: :forward
-  defp get_position("midfielder"), do: :midfielder
-  defp get_position("winger"), do: :winger
-  defp get_position("defender"), do: :defender
-  defp get_position("goalkeeper"), do: :goalkeeper
-  defp get_position(_), do: ""
-
-  defp sort(subjects, ""), do: subjects
-  defp sort(subjects, sort_by), do: Enum.sort(subjects, &sort_fun(&1, &2, sort_by))
-
-  defp sort_fun(a, b, "name"), do: a.name <= b.name
-  defp sort_fun(a, b, "position"), do: a.position <= b.position
-  defp sort_fun(a, b, "team"), do: sort_team(a.team, b.team)
-
-  defp sort_team("Retired", _), do: false
-  defp sort_team(_, "Retired"), do: true
-  defp sort_team(a, b), do: a <= b
 end
